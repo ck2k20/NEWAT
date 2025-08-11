@@ -41,7 +41,8 @@ export default function SimpleMap({
       longitude: center[1] + 0.005,
       isOnline: true,
       age: currentUser.age || 25,
-      bio: currentUser.bio || 'MapChats User'
+      bio: currentUser.bio || 'MapChats User',
+      gender: currentUser.gender || 'Male'
     }
     allUsers.unshift(currentUserDot) // Add at beginning so it renders on top
     console.log('🗺️ CURRENT USER DOT ADDED:', currentUserDot.avatar)

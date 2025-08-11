@@ -10,6 +10,7 @@ interface User {
   isOnline: boolean
   age: number
   bio: string
+  gender: string
 }
 
 interface UserDotsProps {
@@ -154,7 +155,7 @@ export default function UserDots({ users, onUserClick }: UserDotsProps) {
                   background: 'rgba(255, 255, 255, 0.08)',
                   color: 'rgba(255, 255, 255, 0.6)'
                 }}>
-                  Male
+                  {user.gender}
                 </div>
                 <div style={{
                   padding: '2px 6px',

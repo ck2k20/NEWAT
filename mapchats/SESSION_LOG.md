@@ -136,5 +136,128 @@ src/
 
 ---
 
-**Session Status**: Technical work complete, critical blocker identified  
-**Recommended Next Action**: Debug and resolve app loading issue before continuing development
+## Session 3: Settings System Redesign & Avatar Implementation
+**Date**: 2025-08-11 (Continued Session)  
+**Duration**: Extended session focused on UI consolidation and avatar system completion  
+**Status**: Settings system streamlined, avatar system fully implemented  
+
+### Work Completed ✅
+
+#### Settings System Redesign
+- **Consolidated Settings**: Merged separate SettingsPopup and EditProfilePopup into single integrated component
+- **Form Fields Fixed**: Removed unwanted email field, implemented correct fields (username, age, gender, bio)
+- **Duplicate Button Removal**: Eliminated duplicate "upgrade to premium" buttons as requested
+- **Integrated Actions**: Seamlessly integrated upgrade and sign out buttons into main profile editor
+
+#### Avatar System Implementation
+- **DiceBear Integration**: Complete avatar generation system using reliable DiceBear API
+- **Real-time Updates**: Avatar changes in profile editor immediately update map dots
+- **Mock User Fix**: Replaced all broken Unsplash URLs with reliable DiceBear-generated avatars
+- **Cross-Component Display**: Avatars now display correctly in map dots, chat popups, and profile cards
+
+#### Test Account System
+- **Mod Superaccount**: `mod@mapchats.dev` / `modtest123` (Full permissions + premium)
+- **Premium Test**: `premium@test.com` / `premium123` (Premium features enabled)  
+- **Free User Test**: `free@test.com` / `free123` (Basic features only)
+- **Development Debug Panel**: Real-time account status display for testing
+
+#### UI Improvements
+- **Modern Sign-in Symbol**: Changed from ugly 🔐 to modern 👤 as requested
+- **Single Settings Flow**: Settings button now directly opens integrated profile editor
+- **Gender Field Integration**: Added proper gender field to User interface and fixed hardcoded displays
+
+#### Code Quality & Cleanup
+- **Removed Dead Code**: Eliminated unused SettingsPopup.tsx component
+- **Fixed Hardcoded Values**: UserDots now displays actual user.gender instead of "Male"
+- **Interface Consistency**: Updated User interface across all components with gender field
+- **Type Safety**: All avatar operations properly typed and error-safe
+
+### Files Modified This Session
+```
+src/
+├── components/
+│   ├── EditProfilePopup.tsx (complete restructure - integrated settings)
+│   ├── UserDots.tsx (fixed hardcoded gender, updated interface)
+│   └── SimpleMap.tsx (updated currentUserDot with gender field)
+├── data/
+│   └── mockUserDots.ts (added gender field, updated all users with DiceBear avatars)
+├── App.tsx (enhanced avatar system and user state management)
+└── [REMOVED] components/SettingsPopup.tsx (unused component cleanup)
+```
+
+### User Requirements Fulfilled ✅
+- ✅ **Removed email address** from edit profile form as requested
+- ✅ **Correct fields implemented**: age, gender, bio, username (not email)
+- ✅ **Duplicate upgrade button eliminated** - now appears only once in integrated popup
+- ✅ **Edit profile visible on first popup** after clicking settings
+- ✅ **Smooth integration** of upgrade to premium and sign out into single popup
+- ✅ **Modern sign-in symbol** - replaced ugly 🔐 with appealing 👤
+- ✅ **Test accounts setup** - mod, premium, and free user accounts working
+- ✅ **Avatar system complete** - mock users now have working profile pictures everywhere
+
+### Technical Debt Addressed
+- **Avatar Display Issues**: Fixed mock users not having avatars as profile pictures
+- **Hardcoded UI Values**: Eliminated hardcoded "Male" gender in UserDots tooltips
+- **Interface Inconsistency**: Standardized User interface with gender field across components
+- **Dead Code Removal**: Cleaned up unused SettingsPopup component
+
+### Current System Architecture
+
+**Settings Flow**:
+```
+Settings Button (⚙️) → EditProfilePopup (integrated)
+├── Profile Fields: username, age, gender, bio
+├── Avatar Generator: DiceBear API with real-time preview
+├── Save Profile: Updates currentUser state + map dot
+├── Upgrade to Premium: Integrated button (conditionally shown)
+└── Sign Out: Integrated action button
+```
+
+**Avatar System**:
+```
+Profile Editor → Generate Avatar → DiceBear API
+                      ↓
+                Update currentUser.avatar
+                      ↓
+             SimpleMap creates currentUserDot
+                      ↓
+              All UI components display avatar
+```
+
+### Next Session Priorities
+
+#### 🎯 High Priority (Ready for Implementation)
+1. **Backend Integration**: Connect profile updates to actual database persistence
+2. **Real-time Chat System**: Implement WebSocket/Supabase real-time messaging
+3. **User Geolocation**: Add dynamic user positioning based on actual location
+4. **Authentication System**: Replace mock accounts with proper auth flow
+
+#### 📈 Medium Priority
+5. **Payment Integration**: Add real payment processing for premium upgrades  
+6. **Voice/Video WebRTC**: Implement actual calling functionality
+7. **Error Boundaries**: Add proper error handling for network failures
+8. **Mobile Optimization**: Enhance responsive design
+
+#### 🔧 Code Quality
+9. **Configuration Management**: Move test accounts to config file
+10. **Avatar Error Handling**: Add fallbacks for avatar loading failures
+11. **State Persistence**: Add localStorage for user preferences
+
+### Key Achievements
+- **User Experience**: Single, streamlined settings interface
+- **Visual Consistency**: Avatars work correctly across all components
+- **Code Quality**: Removed unused code and fixed hardcoded values  
+- **Developer Experience**: Comprehensive test account system
+- **Requirements Met**: All user requests fully implemented
+
+### Session Outcome
+- **Settings System**: Complete redesign successful ✅
+- **Avatar Implementation**: Fully functional across all UI ✅  
+- **User Requirements**: All fulfilled as specified ✅
+- **Code Quality**: Improved with cleanup and proper typing ✅
+- **Ready for Next Phase**: Backend integration and real-time features ✅
+
+---
+
+**Session Status**: All user requirements completed, system ready for backend integration  
+**Recommended Next Action**: Begin backend integration for profile persistence and real-time chat

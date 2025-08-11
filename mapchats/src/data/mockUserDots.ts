@@ -7,6 +7,7 @@ export interface User {
   isOnline: boolean
   age: number
   bio: string
+  gender: string
 }
 
 export const mockUsers: User[] = [
@@ -18,7 +19,8 @@ export const mockUsers: User[] = [
     longitude: -73.9851,
     isOnline: true,
     age: 28,
-    bio: 'Love exploring the city and meeting new people! ✨'
+    bio: 'Love exploring the city and meeting new people! ✨',
+    gender: 'Male'
   },
   {
     id: '2', 
@@ -28,7 +30,8 @@ export const mockUsers: User[] = [
     longitude: -73.9442,
     isOnline: true,
     age: 24,
-    bio: 'Artist and coffee enthusiast ☕🎨'
+    bio: 'Artist and coffee enthusiast ☕🎨',
+    gender: 'Female'
   },
   {
     id: '3',
@@ -38,7 +41,8 @@ export const mockUsers: User[] = [
     longitude: -73.9934,
     isOnline: false,
     age: 32,
-    bio: 'Tech entrepreneur, always looking for the next big thing'
+    bio: 'Tech entrepreneur, always looking for the next big thing',
+    gender: 'Male'
   },
   {
     id: '4',
@@ -48,7 +52,8 @@ export const mockUsers: User[] = [
     longitude: -73.7949,
     isOnline: true,
     age: 26,
-    bio: 'Foodie exploring NYC one restaurant at a time 🍕'
+    bio: 'Foodie exploring NYC one restaurant at a time 🍕',
+    gender: 'Female'
   },
   {
     id: '5',
@@ -58,7 +63,8 @@ export const mockUsers: User[] = [
     longitude: -73.8648,
     isOnline: true,
     age: 29,
-    bio: 'Musician and photographer 📸🎵'
+    bio: 'Musician and photographer 📸🎵',
+    gender: 'Male'
   },
   {
     id: '6',
@@ -68,6 +74,7 @@ export const mockUsers: User[] = [
     longitude: -74.1502,
     isOnline: false,
     age: 31,
-    bio: 'Nature lover escaping to the parks whenever possible 🌳'
+    bio: 'Nature lover escaping to the parks whenever possible 🌳',
+    gender: 'Female'
   }
 ]
