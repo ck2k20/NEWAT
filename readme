@@ -1,0 +1,100 @@
+
+project github url: https://github.com/ck2k20/NEWAT
+project supabase url: https://hwlefmwmwwxnwcxqnxzc.supabase.co
+
+I want you to help me build MapChats, a real-time social chat web app with these core ideas:
+
+App Concept
+Full-screen interactive dark-themed map showing all active users as dots at their locations in real-time.
+
+Clicking a user dot opens a profile card showing username, picture, bio, age, gender, and a "start chat" button.
+
+UI elements are symbolic icons, not text.
+
+Top right: Sign in/up button (changes to settings icon once signed in).
+
+Top left: Active chats dropdown listing ongoing chats; selecting a chat opens it in the chat popup.
+
+Bottom right: Chat popup shows one chat at a time with full chat functionality: text, emojis, voice notes, voice & video calls, delete chat, block user.
+
+Settings page allows profile editing, sign out, and upgrading to premium.
+
+Free tier limits: 500 messages/week, 10 voice/video calls. Premium is $5/month via Stripe with unlimited usage.
+
+Moderation account and mock users for testing pre-launch.
+
+Security, clean code, and scalable realtime syncing are priorities.
+
+Tech Stack
+Frontend: React + Typescript
+
+Styling: Tailwind CSS for modern dark theme and minimalist, compact UI
+
+Mapping: Leaflet + openstreetmaps tiles
+
+Realtime: Supabase Realtime or WebSockets
+
+Backend: Supabase for auth, database, realtime data
+
+Payments: Stripe integration
+
+Calls: WebRTC or Twilio for voice/video calls
+
+Deployment: Vercel hosting frontend, Supabase backend
+
+Possible Development Phases
+Initialize project: React + Typescript + Tailwind + routing + Supabase client + icon library + state management.
+
+Basic folder structure for components, pages, lib/utilities.
+
+Implement fullscreen map with user dots and profile card popup.
+
+Authentication flow with sign in/up and settings button swap.
+
+Active chats dropdown and chat popup with basic realtime text chat.
+
+Profile editing, settings page, and Stripe payments integration.
+
+Add voice notes, voice calls, video calls UI and backend integration.
+
+Moderation tools and mock user setup.
+
+Testing, debugging, security hardening, final polish, and launch preparation.
+
+
+
+End-of-Session Prompt (with commit & push instructions)
+Before ending this session, please complete the following steps thoroughly:
+
+Summarize Work Done
+
+Write a concise summary of all features, fixes, and changes completed in this session.
+
+Identify Technical Debt & Blockers
+
+List any unfinished tasks, bugs, or technical debt remaining.
+
+Code Quality & Cleanup
+
+Refactor and clean code to remove redundancies or warnings.
+
+Ensure all code is well-commented and follows best practices.
+
+Documentation
+
+Update or add documentation relevant to new features or changes.
+
+Update SESSION_LOG.md with a summary of this session, following the template below.
+
+Version Control
+
+Stage all changed files (including SESSION_LOG.md).
+
+Commit all changes with a clear, descriptive commit message summarizing this session’s work.
+
+Push the commit(s) to the main branch on GitHub.
+
+Prepare for Next Session
+
+Provide a brief plan or notes outlining the next steps for the upcoming session.
+
