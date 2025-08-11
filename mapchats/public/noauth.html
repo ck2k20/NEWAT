@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MapChats - No Auth Test</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="module">
+        import React from '/node_modules/.vite/deps/react.js?v=51ec75f1'
+        import { createRoot } from '/node_modules/.vite/deps/react-dom_client.js?v=51ec75f1'
+        import '/src/index.css'
+        import AppNoAuth from '/src/AppNoAuth.tsx'
+        
+        console.log('Loading MapChats without auth...')
+        
+        try {
+            const root = createRoot(document.getElementById('root'))
+            root.render(React.createElement(React.StrictMode, null, React.createElement(AppNoAuth)))
+            console.log('MapChats (no-auth) rendered successfully')
+        } catch (error) {
+            console.error('Failed to render MapChats (no-auth):', error)
+            document.body.innerHTML = `
+                <div style="padding: 20px; background: #0f172a; color: white; min-height: 100vh;">
+                    <h1>MapChats Loading Failed</h1>
+                    <p style="color: #ef4444;">Error: ${error.message}</p>
+                    <pre style="background: #1f2937; padding: 15px; border-radius: 8px; overflow: auto;">
+${error.stack}
+                    </pre>
+                </div>
+            `
+        }
+    </script>
+</body>
+</html>

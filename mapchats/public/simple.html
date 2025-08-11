@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple React Test</title>
+</head>
+<body>
+    <div id="simple-root"></div>
+    <script type="module">
+        import React from '/node_modules/.vite/deps/react.js?v=51ec75f1'
+        import { createRoot } from '/node_modules/.vite/deps/react-dom_client.js?v=51ec75f1'
+        import SimpleApp from '/src/SimpleApp.tsx'
+        
+        console.log('Loading simple React app...')
+        
+        try {
+            const root = createRoot(document.getElementById('simple-root'))
+            root.render(React.createElement(SimpleApp))
+            console.log('Simple React app rendered successfully')
+        } catch (error) {
+            console.error('Failed to render simple React app:', error)
+            document.getElementById('simple-root').innerHTML = `
+                <div style="padding: 20px; background: #fee; color: #900;">
+                    <h1>React Loading Failed</h1>
+                    <p>Error: ${error.message}</p>
+                </div>
+            `
+        }
+    </script>
+</body>
+</html>

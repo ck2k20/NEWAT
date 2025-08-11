@@ -49,9 +49,11 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
 
   checkAuth: async () => {
     try {
+      console.log('AuthStore: Starting checkAuth')
       // For demo purposes, simulate auth check without real Supabase connection
       await new Promise(resolve => setTimeout(resolve, 100))
       
+      console.log('AuthStore: Setting isLoading = false')
       // Set as unauthenticated for demo - user can still see the map
       set({ user: null, isAuthenticated: false, isLoading: false })
     } catch (error) {

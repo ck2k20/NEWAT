@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Minimal Test</title>
+    <style>body{background:#000;color:#0f0;font-family:monospace;padding:20px}</style>
+</head>
+<body>
+    <h1>✓ SUCCESS: Basic HTML is loading!</h1>
+    <p>Time: <span id="time"></span></p>
+    <p>If you can see this, the server is accessible.</p>
+    
+    <h2>Connection Info:</h2>
+    <ul>
+        <li>URL: <span id="url"></span></li>
+        <li>User Agent: <span id="ua"></span></li>
+        <li>Screen: <span id="screen"></span></li>
+    </ul>
+    
+    <script>
+        document.getElementById('time').textContent = new Date().toLocaleString();
+        document.getElementById('url').textContent = window.location.href;
+        document.getElementById('ua').textContent = navigator.userAgent;
+        document.getElementById('screen').textContent = screen.width + 'x' + screen.height;
+        console.log('Minimal test page loaded successfully');
+    </script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Test</title>
+    <style>
+        body { background: #000; color: #0f0; font-family: monospace; padding: 20px; }
+        .error { color: #f00; }
+        .success { color: #0f0; }
+    </style>
+</head>
+<body>
+    <h1>React Loading Test</h1>
+    <div id="test-root"></div>
+    <div id="error-log"></div>
+    
+    <script type="module">
+        const errorDiv = document.getElementById('error-log');
+        const testRoot = document.getElementById('test-root');
+        
+        // Capture all errors
+        window.addEventListener('error', (e) => {
+            console.error('Error:', e);
+            errorDiv.innerHTML += `<div class="error">❌ Error: ${e.message} at ${e.filename}:${e.lineno}</div>`;
+        });
+        
+        window.addEventListener('unhandledrejection', (e) => {
+            console.error('Unhandled rejection:', e);
+            errorDiv.innerHTML += `<div class="error">❌ Promise rejection: ${e.reason}</div>`;
+        });
+        
+        try {
+            console.log('Starting React test...');
+            
+            // Import React
+            const { createElement, StrictMode } = await import('/node_modules/.vite/deps/react.js?v=51ec75f1');
+            const { createRoot } = await import('/node_modules/.vite/deps/react-dom_client.js?v=51ec75f1');
+            
+            console.log('React imports successful');
+            
+            // Create a simple component
+            const TestComponent = () => {
+                return createElement('div', { 
+                    style: { padding: '20px', background: '#333', borderRadius: '8px' }
+                }, [
+                    createElement('h2', { key: 'title' }, '✅ React is working!'),
+                    createElement('p', { key: 'desc' }, 'This means React can render components.'),
+                    createElement('p', { key: 'time' }, `Time: ${new Date().toLocaleString()}`)
+                ]);
+            };
+            
+            console.log('Component created');
+            
+            // Render the component
+            const root = createRoot(testRoot);
+            root.render(createElement(StrictMode, null, createElement(TestComponent)));
+            
+            console.log('✅ React test successful!');
+            
+        } catch (error) {
+            console.error('React test failed:', error);
+            errorDiv.innerHTML += `<div class="error">❌ React test failed: ${error.message}</div>`;
+            testRoot.innerHTML = '<div class="error">React failed to load</div>';
+        }
+    </script>
+</body>
+</html>

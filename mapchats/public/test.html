@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MapChats Loading Test</title>
+    <style>
+        body {
+            background: #0f172a;
+            color: white;
+            font-family: system-ui;
+            padding: 20px;
+        }
+        .status { color: #10b981; }
+        .error { color: #ef4444; }
+        .test { margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>MapChats Loading Test</h1>
+    
+    <div class="test">
+        <span class="status">✓</span> Basic HTML Loading: Working
+    </div>
+    
+    <div class="test">
+        <span id="js-status">⏳</span> JavaScript: <span id="js-msg">Testing...</span>
+    </div>
+    
+    <div class="test">
+        <span id="network-status">⏳</span> Network Access: <span id="network-msg">Testing...</span>
+    </div>
+    
+    <div class="test">
+        <span id="react-status">⏳</span> React App: <span id="react-msg">Testing...</span>
+    </div>
+    
+    <script>
+        // Test JavaScript
+        document.getElementById('js-status').innerHTML = '<span class="status">✓</span>';
+        document.getElementById('js-msg').textContent = 'Working';
+        
+        // Test network access
+        fetch('/')
+            .then(response => {
+                document.getElementById('network-status').innerHTML = '<span class="status">✓</span>';
+                document.getElementById('network-msg').textContent = 'Working';
+            })
+            .catch(error => {
+                document.getElementById('network-status').innerHTML = '<span class="error">✗</span>';
+                document.getElementById('network-msg').textContent = 'Failed: ' + error.message;
+            });
+        
+        // Test if main React app loads
+        setTimeout(() => {
+            const root = parent.document?.getElementById('root');
+            if (root && root.children.length > 0) {
+                document.getElementById('react-status').innerHTML = '<span class="status">✓</span>';
+                document.getElementById('react-msg').textContent = 'React app loaded';
+            } else {
+                document.getElementById('react-status').innerHTML = '<span class="error">✗</span>';
+                document.getElementById('react-msg').textContent = 'React app not loaded';
+            }
+        }, 2000);
+        
+        console.log('MapChats test page loaded successfully');
+        console.log('Server should be accessible at port 3000');
+        console.log('If you can see this page but not the main app, there may be a React-specific issue');
+    </script>
+</body>
+</html>

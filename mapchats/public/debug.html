@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MapChats Debug Console</title>
+    <style>
+        body {
+            background: #0f172a;
+            color: white;
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            margin: 0;
+        }
+        .debug-section {
+            border: 1px solid #374151;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .success { color: #10b981; }
+        .error { color: #ef4444; }
+        .warning { color: #f59e0b; }
+        .info { color: #3b82f6; }
+        .log {
+            background: #1f2937;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 5px 0;
+            font-size: 12px;
+            overflow-x: auto;
+        }
+        #main-app-frame {
+            width: 100%;
+            height: 400px;
+            border: 2px solid #374151;
+            border-radius: 8px;
+            background: white;
+        }
+        .test-result {
+            padding: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 MapChats Loading Diagnostics</h1>
+    
+    <div class="debug-section">
+        <h2>Environment Check</h2>
+        <div id="env-tests"></div>
+    </div>
+    
+    <div class="debug-section">
+        <h2>Network & Resources</h2>
+        <div id="network-tests"></div>
+    </div>
+    
+    <div class="debug-section">
+        <h2>JavaScript Errors</h2>
+        <div id="error-log"></div>
+    </div>
+    
+    <div class="debug-section">
+        <h2>React App Test Frame</h2>
+        <p>Loading main app in iframe to isolate errors:</p>
+        <iframe id="main-app-frame" src="/"></iframe>
+    </div>
+    
+    <div class="debug-section">
+        <h2>Console Output</h2>
+        <div id="console-log"></div>
+    </div>
+
+    <script>
+        // Capture all console output
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+        
+        const consoleDiv = document.getElementById('console-log');
+        const errorDiv = document.getElementById('error-log');
+        
+        function addLog(type, message, color) {
+            const logDiv = document.createElement('div');
+            logDiv.className = 'log';
+            logDiv.innerHTML = `<span style="color:${color}">[${type}]</span> ${message}`;
+            consoleDiv.appendChild(logDiv);
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+        }
+        
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            addLog('LOG', args.join(' '), '#3b82f6');
+        };
+        
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            addLog('ERROR', args.join(' '), '#ef4444');
+            
+            // Also add to error section
+            const errorEl = document.createElement('div');
+            errorEl.className = 'test-result error';
+            errorEl.textContent = '❌ ' + args.join(' ');
+            errorDiv.appendChild(errorEl);
+        };
+        
+        console.warn = function(...args) {
+            originalWarn.apply(console, args);
+            addLog('WARN', args.join(' '), '#f59e0b');
+        };
+        
+        // Capture unhandled errors
+        window.addEventListener('error', function(e) {
+            const errorMsg = `${e.message} at ${e.filename}:${e.lineno}:${e.colno}`;
+            console.error('Unhandled Error:', errorMsg);
+        });
+        
+        window.addEventListener('unhandledrejection', function(e) {
+            console.error('Unhandled Promise Rejection:', e.reason);
+        });
+        
+        // Environment tests
+        function runEnvironmentTests() {
+            const envDiv = document.getElementById('env-tests');
+            const tests = [
+                { name: 'JavaScript Execution', test: () => true },
+                { name: 'ES6 Support', test: () => { const x = () => true; return x(); } },
+                { name: 'Fetch API', test: () => typeof fetch !== 'undefined' },
+                { name: 'Local Storage', test: () => typeof localStorage !== 'undefined' },
+                { name: 'Promise Support', test: () => typeof Promise !== 'undefined' },
+                { name: 'Module Support', test: () => typeof Symbol !== 'undefined' }
+            ];
+            
+            tests.forEach(test => {
+                try {
+                    const result = test.test();
+                    const className = result ? 'success' : 'error';
+                    const icon = result ? '✅' : '❌';
+                    envDiv.innerHTML += `<div class="test-result ${className}">${icon} ${test.name}</div>`;
+                } catch (e) {
+                    envDiv.innerHTML += `<div class="test-result error">❌ ${test.name}: ${e.message}</div>`;
+                }
+            });
+        }
+        
+        // Network tests
+        async function runNetworkTests() {
+            const networkDiv = document.getElementById('network-tests');
+            
+            // Test main page
+            try {
+                const response = await fetch('/');
+                const success = response.ok;
+                const icon = success ? '✅' : '❌';
+                const className = success ? 'success' : 'error';
+                networkDiv.innerHTML += `<div class="test-result ${className}">${icon} Main page (${response.status})</div>`;
+            } catch (e) {
+                networkDiv.innerHTML += `<div class="test-result error">❌ Main page: ${e.message}</div>`;
+            }
+            
+            // Test React entry point
+            try {
+                const response = await fetch('/src/main.tsx');
+                const success = response.ok;
+                const icon = success ? '✅' : '❌';
+                const className = success ? 'success' : 'error';
+                networkDiv.innerHTML += `<div class="test-result ${className}">${icon} React entry point (${response.status})</div>`;
+            } catch (e) {
+                networkDiv.innerHTML += `<div class="test-result error">❌ React entry point: ${e.message}</div>`;
+            }
+            
+            // Test CSS
+            try {
+                const response = await fetch('/src/index.css');
+                const success = response.ok;
+                const icon = success ? '✅' : '❌';
+                const className = success ? 'success' : 'error';
+                networkDiv.innerHTML += `<div class="test-result ${className}">${icon} CSS (${response.status})</div>`;
+            } catch (e) {
+                networkDiv.innerHTML += `<div class="test-result error">❌ CSS: ${e.message}</div>`;
+            }
+        }
+        
+        // Monitor iframe loading
+        const iframe = document.getElementById('main-app-frame');
+        let loadTimeout;
+        
+        iframe.onload = function() {
+            clearTimeout(loadTimeout);
+            console.log('✅ Iframe loaded successfully');
+            
+            // Try to access iframe content
+            try {
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                const rootEl = iframeDoc.getElementById('root');
+                if (rootEl) {
+                    if (rootEl.innerHTML.trim() === '') {
+                        console.warn('⚠️ Root element exists but is empty');
+                    } else if (rootEl.innerHTML.includes('Loading...')) {
+                        console.warn('⚠️ App stuck on loading screen');
+                    } else {
+                        console.log('✅ App content loaded in root element');
+                    }
+                } else {
+                    console.error('❌ Root element not found in iframe');
+                }
+            } catch (e) {
+                console.warn('⚠️ Cannot access iframe content (likely CORS):', e.message);
+            }
+        };
+        
+        iframe.onerror = function(e) {
+            clearTimeout(loadTimeout);
+            console.error('❌ Iframe failed to load:', e);
+        };
+        
+        // Set timeout for iframe loading
+        loadTimeout = setTimeout(() => {
+            console.error('❌ Iframe loading timeout (10 seconds)');
+        }, 10000);
+        
+        // Initialize
+        console.log('🚀 Starting MapChats diagnostic...');
+        runEnvironmentTests();
+        runNetworkTests();
+        
+        // Additional debug info
+        console.log('User Agent:', navigator.userAgent);
+        console.log('Current URL:', window.location.href);
+        console.log('Screen Resolution:', screen.width + 'x' + screen.height);
+        console.log('Viewport:', window.innerWidth + 'x' + window.innerHeight);
+    </script>
+</body>
+</html>
